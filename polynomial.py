@@ -53,20 +53,19 @@ class Polynomial:
         variable_degree_dict = {x: '' for x in self._variables}
         variable = ''
         degree = ''
-        multiplier = ''
+        variable_degree_dict['_'] = ''
         for index, e in enumerate(monom):
             if e == '*' or e == '^':
                 continue
             if variable == '':
                 if e.isalpha():
                     variable = e
-                    if multiplier == '':
-                        multiplier = '1'
-                    elif multiplier == '-':
-                        multiplier = '-1'
-                    variable_degree_dict['_'] = multiplier
+                    if variable_degree_dict['_'] == '':
+                        variable_degree_dict['_'] = '1'
+                    elif variable_degree_dict['_'] == '-':
+                        variable_degree_dict['_'] = '-1'
                 else:
-                    multiplier += e
+                    variable_degree_dict['_'] += e
             elif index == len(monom) - 1:
                 if e.isalpha():
                     variable_degree_dict[variable] = degree if not degree == '' else '1'
@@ -89,3 +88,8 @@ class Polynomial:
         parsed1 = self.split_polynom_to_dict()
         parsed2 = other.split_polynom_to_dict()
         return parsed1 == parsed2
+
+
+if __name__ == "__main__":
+    polynom = Polynomial("2")
+    polynom.init_var_deg_dict("2")

@@ -20,6 +20,7 @@ class TestParsers(unittest.TestCase):
                          {'x': '3', 'y': '3', '_': '1'})
         self.assertEqual(Polynomial.init_var_deg_dict(Polynomial('-x^2'), '-x^2'),
                          {'x': '2', '_': '-1'})
+        self.assertEqual(Polynomial.init_var_deg_dict(Polynomial('2'), '2'), {'_': '2'})
 
     def test_split_polynom(self):
         self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('2xy')),
@@ -32,7 +33,6 @@ class TestParsers(unittest.TestCase):
                          {(10, 3, 0): 15, (0, 0, 4): -1})
 
 # TODO
-# class TestMultiplication(unittest.TestCase):
 
 
 if __name__ == '__main__':
