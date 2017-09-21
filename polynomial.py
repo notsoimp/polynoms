@@ -100,6 +100,9 @@ class Polynomial:
                 return False
         return True
 
+    def multiply(self):
+        pass
+
 
 if __name__ == "__main__":
     polynom = Polynomial("2")

@@ -1,5 +1,4 @@
-import sys
-import argparse
+import sys, argparse, re
 from polynomial import Polynomial
 
 
@@ -27,7 +26,7 @@ def main():
     polynomial1 = Polynomial(args.polynoms[0])
     polynomial2 = Polynomial(args.polynoms[1])
     if not polynomial1.is_correct() or not polynomial2.is_correct():
-        sys.stdout.write("Polynomial is not in the right form! "
+        sys.stdout.write("Polynomials are not in the right form! "
                          "\nYou have problem with {}. Check input again"
                          "\nRight form is the sum of classic monomials. "
                          "\nFor example, '2x^2+y^6*x^3' is in the right form."
@@ -35,6 +34,7 @@ def main():
                          .
                          format(polynomial1.errors + polynomial2.errors))
         sys.exit(1)
+
 
     sys.stdout.write('Polynomials are equal' if polynomial1 == polynomial2
                      else 'Polynomials are not equal')

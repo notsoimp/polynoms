@@ -35,7 +35,7 @@ class TestParsers(unittest.TestCase):
     def test_is_equal(self):
         self.assertTrue(Polynomial('2x^2-2x+2') == Polynomial('-2x+2x^2+2'))
         self.assertTrue(Polynomial('2x-2x') == Polynomial('0'))
-# TODO
+        self.assertTrue(Polynomial('15xy+25x^2y^2') == Polynomial('15yx+25y^2*x^2'))
 
 
 if __name__ == '__main__':
