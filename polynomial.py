@@ -3,7 +3,7 @@ import re
 
 class Polynomial:
     def __init__(self, polynom):
-        self._polynom = polynom.replace(' ', '')
+        self.polynom = polynom.replace(' ', '')
         self.errors = ''
         self._variables = list(set(re.findall(r'[a-zA-Z]', polynom)))
         self._variables.sort()
@@ -36,7 +36,7 @@ class Polynomial:
         return True
 
     def split_polynom_to_dict(self):
-        self._polynom = self._polynom.replace('-', '+-')
+        self.polynom = self._polynom.replace('-', '+-')
         monomials = filter(None, self._polynom.split('+'))
         for monom in monomials:
             variable_degree_dict = self.init_var_deg_dict(monom)
