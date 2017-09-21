@@ -32,6 +32,9 @@ class TestParsers(unittest.TestCase):
         self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('15x^10*y^3 - z^4')),
                          {(10, 3, 0): 15, (0, 0, 4): -1})
 
+    def test_is_equal(self):
+        self.assertTrue(Polynomial('2x^2-2x+2') == Polynomial('-2x+2x^2+2'))
+        self.assertTrue(Polynomial('2x-2x') == Polynomial('0'))
 # TODO
 
 

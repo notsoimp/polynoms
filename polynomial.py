@@ -10,10 +10,13 @@ class Polynomial:
         self._dict = {}
         self._variable_degree_dict = {x: '' for x in self._variables}
 
+    def __eq__(self, other):
+        return self.is_equal(other) and other.is_equal(self)
+
     def is_correct(self):
-        unacceptables = re.findall(r'[^a-zA-Z\d\-+*^()]', self._polynom)
-        if not unacceptables.__len__() == 0:
-            self.errors = 'unacceptable symbols: '+' '.join(x for x in unacceptables)
+        unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self._polynom)
+        if not unacceptable.__len__() == 0:
+            self.errors = 'unacceptable symbols: '+' '.join(x for x in unacceptable)
             return False
         pre_hats = re.findall(r'(?<![a-zA-Z])\^', self._polynom)
         if not pre_hats.__len__() == 0:
@@ -34,7 +37,7 @@ class Polynomial:
 
     def split_polynom_to_dict(self):
         self._polynom = self._polynom.replace('-', '+-')
-        monomials = self._polynom.split('+')
+        monomials = filter(None, self._polynom.split('+'))
         for monom in monomials:
             variable_degree_dict = self.init_var_deg_dict(monom)
             for var in self._variables:
@@ -60,17 +63,15 @@ class Polynomial:
             if variable == '':
                 if e.isalpha():
                     variable = e
-                    if variable_degree_dict['_'] == '':
-                        variable_degree_dict['_'] = '1'
-                    elif variable_degree_dict['_'] == '-':
-                        variable_degree_dict['_'] = '-1'
+                    if index == len(monom) - 1:
+                        variable_degree_dict[variable] = 1
                 else:
                     variable_degree_dict['_'] += e
             elif index == len(monom) - 1:
                 if e.isalpha():
                     variable_degree_dict[variable] = degree if not degree == '' else '1'
                     variable_degree_dict[e] = '1'
-                elif e.isdigit():
+                else:
                     degree += e
                     variable_degree_dict[variable] = degree
                     degree = ''
@@ -82,12 +83,22 @@ class Polynomial:
                 degree = ''
             else:
                 degree += e
+        if variable_degree_dict['_'] == '':
+            variable_degree_dict['_'] = '1'
+        elif variable_degree_dict['_'] == '-':
+            variable_degree_dict['_'] = '-1'
         return variable_degree_dict
 
     def is_equal(self, other):
         parsed1 = self.split_polynom_to_dict()
         parsed2 = other.split_polynom_to_dict()
-        return parsed1 == parsed2
+        for degree in parsed1:
+            value = parsed1[degree]
+            if value == 0:
+                continue
+            if value != parsed2[degree]:
+                return False
+        return True
 
 
 if __name__ == "__main__":

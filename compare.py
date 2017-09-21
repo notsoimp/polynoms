@@ -36,7 +36,7 @@ def main():
                          format(polynomial1.errors + polynomial2.errors))
         sys.exit(1)
 
-    sys.stdout.write('Polynomials are equal' if polynomial1.is_equal(polynomial2)
+    sys.stdout.write('Polynomials are equal' if polynomial1 == polynomial2
                      else 'Polynomials are not equal')
 
 
