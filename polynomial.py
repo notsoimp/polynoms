@@ -2,10 +2,10 @@ import re
 
 
 class Polynomial:
-    def __init__(self, polynom):
-        self.polynom = polynom.replace(' ', '')
+    def __init__(self, polynomial):
+        self.polynom = polynomial.replace(' ', '')
         self.errors = ''
-        self._variables = list(set(re.findall(r'[a-zA-Z]', polynom)))
+        self._variables = list(set(re.findall(r'[a-zA-Z]', polynomial)))
         self._variables.sort()
         self._dict = {}
         self._variable_degree_dict = {x: '' for x in self._variables}
@@ -14,30 +14,30 @@ class Polynomial:
         return self.is_equal(other) and other.is_equal(self)
 
     def is_correct(self):
-        unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self._polynom)
+        unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self.polynom)
         if not unacceptable.__len__() == 0:
             self.errors = 'unacceptable symbols: '+' '.join(x for x in unacceptable)
             return False
-        pre_hats = re.findall(r'(?<![a-zA-Z])\^', self._polynom)
+        pre_hats = re.findall(r'(?<![a-zA-Z])\^', self.polynom)
         if not pre_hats.__len__() == 0:
             self.errors = 'strange symbol before \"^\". ' \
                            '\nRemember that I can not build a number to the power'
             return False
-        after_hats = re.findall(r'\^(?!\d)', self._polynom)
+        after_hats = re.findall(r'\^(?!\d)', self.polynom)
         if not after_hats.__len__() == 0:
             self.errors = 'strange symbol after \"^\".' \
                            '\nRemember that I can work only with natural degrees'
             return False
-        open_brace = re.findall(r'[(]', self._polynom)
-        close_brace = re.findall(r'[)]', self._polynom)
+        open_brace = re.findall(r'[(]', self.polynom)
+        close_brace = re.findall(r'[)]', self.polynom)
         if len(open_brace) != len(close_brace):
             self.errors = 'opened and closed braces'
             return False
         return True
 
     def split_polynom_to_dict(self):
-        self.polynom = self._polynom.replace('-', '+-')
-        monomials = filter(None, self._polynom.split('+'))
+        self.polynom = self.polynom.replace('-', '+-')
+        monomials = filter(None, self.polynom.split('+'))
         for monom in monomials:
             variable_degree_dict = self.init_var_deg_dict(monom)
             for var in self._variables:
