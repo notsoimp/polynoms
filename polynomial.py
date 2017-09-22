@@ -105,5 +105,4 @@ class Polynomial:
 
 
 if __name__ == "__main__":
-    polynom = Polynomial("2")
-    polynom.init_var_deg_dict("2")
+    print("I'm only the class realizer. I can do nothing, sorry. Please, call compare.py to do it. He can.")
