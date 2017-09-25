@@ -1,4 +1,5 @@
-import sys, argparse
+import sys
+import argparse
 from polynomial import Polynomial
 
 

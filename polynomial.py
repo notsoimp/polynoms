@@ -76,8 +76,6 @@ class Polynomial:
                     variable_degree_dict[variable] = degree
                     degree = ''
             elif e.isalpha():
-                if degree == '':
-                    degree = '1'
                 variable_degree_dict[variable] = degree
                 variable = e
                 degree = ''
@@ -96,7 +94,7 @@ class Polynomial:
             value = parsed1[degree]
             if value == 0:
                 continue
-            if value != parsed2[degree]:
+            if degree not in parsed2 or value != parsed2[degree]:
                 return False
         return True
 
@@ -109,7 +107,7 @@ class Polynomial:
             for degrees_tuple2 in parsed2:
                 multiplier = parsed1[degrees_tuple1] * parsed2[degrees_tuple2]
 
-                degrees = tuple(degree1+degree2
+                degrees = tuple(degree1 + degree2
                                 for index1, degree1 in enumerate(degrees_tuple1)
                                 for index2, degree2 in enumerate(degrees_tuple2)
                                 if index1 == index2)
@@ -120,5 +118,6 @@ class Polynomial:
         return result
 
 
-if __name__ == "__main__":
-    print("I'm only the class realizer. I can do nothing, sorry. Please, call compare.py to do it. He can.")
+'''if __name__ == "__main__":
+    sys.stdout.write("I'm only the class realizer. I can do nothing, sorry. "
+                     "\nPlease, call compare.py to do it. He can.\n") '''

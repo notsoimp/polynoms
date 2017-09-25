@@ -4,12 +4,13 @@ from polynomial import Polynomial
 
 class TestParsers(unittest.TestCase):
     def test_is_correct(self):
-        self.assertTrue(Polynomial.is_correct(Polynomial('2x^2 + 3xy')))
-        self.assertTrue(Polynomial.is_correct(Polynomial('2 * x ^ 2')))
-        self.assertTrue(Polynomial.is_correct(Polynomial('(15x)(13z^3+2)')))
-        self.assertFalse(Polynomial.is_correct(Polynomial('(15x')))
-        self.assertFalse(Polynomial.is_correct(Polynomial('25^x')))
-        self.assertFalse(Polynomial.is_correct(Polynomial('x^*5')))
+        self.assertTrue(Polynomial('2x^2 + 3xy').is_correct())
+        self.assertTrue(Polynomial('2 * x ^ 2').is_correct())
+        self.assertTrue(Polynomial('(15x)(13z^3+2)').is_correct())
+        self.assertFalse(Polynomial('(15x').is_correct())
+        self.assertFalse(Polynomial('25^x').is_correct())
+        self.assertFalse(Polynomial('x^*5').is_correct())
+        self.assertFalse(Polynomial('xП^3').is_correct())
 
     def test_init_dict(self):
         self.assertEqual(Polynomial.init_var_deg_dict(Polynomial('2xy'), '2xy'),
@@ -23,8 +24,8 @@ class TestParsers(unittest.TestCase):
         self.assertEqual(Polynomial.init_var_deg_dict(Polynomial('2'), '2'), {'_': '2'})
 
     def test_split_polynom(self):
-        self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('2xy')),
-                         {(1, 1): 2})
+        self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('2x')),
+                         {(1, ): 2})
         self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('2x^3y^4')),
                          {(3, 4): 2})
         self.assertEqual(Polynomial.split_polynom_to_dict(Polynomial('x^3+ 15x^8')),
@@ -36,6 +37,7 @@ class TestParsers(unittest.TestCase):
         self.assertTrue(Polynomial('2x^2-2x+2') == Polynomial('-2x+2x^2+2'))
         self.assertTrue(Polynomial('2x-2x') == Polynomial('0'))
         self.assertTrue(Polynomial('15xy+25x^2y^2') == Polynomial('15yx+25y^2*x^2'))
+        self.assertFalse(Polynomial('2x') == Polynomial('2x^2'))
 
     def test_multiply(self):
         self.assertEqual(Polynomial('2x^2+1').multiply(Polynomial('2x^3-x')),
