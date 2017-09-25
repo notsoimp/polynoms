@@ -1,5 +1,5 @@
 import unittest
-from polynomial import Polynomial
+from lib.polynomial import Polynomial
 
 
 class TestParsers(unittest.TestCase):

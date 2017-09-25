@@ -1,6 +1,6 @@
 import sys
 import argparse
-from polynomial import Polynomial
+from lib.polynomial import Polynomial
 
 
 def parse_args():
