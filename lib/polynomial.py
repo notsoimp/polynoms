@@ -13,6 +13,17 @@ class Polynomial:
     def __eq__(self, other):
         return self.is_equal(other) and other.is_equal(self)
 
+    def is_equal(self, other):
+        parsed1 = self.split_polynom_to_dict()
+        parsed2 = other.split_polynom_to_dict()
+        for degree in parsed1:
+            value = parsed1[degree]
+            if value == 0:
+                continue
+            if degree not in parsed2 or value != parsed2[degree]:
+                return False
+        return True
+
     def is_correct(self):
         unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self.polynom)
         if not unacceptable.__len__() == 0:
@@ -86,17 +97,6 @@ class Polynomial:
         elif variable_degree_dict['_'] == '-':
             variable_degree_dict['_'] = '-1'
         return variable_degree_dict
-
-    def is_equal(self, other):
-        parsed1 = self.split_polynom_to_dict()
-        parsed2 = other.split_polynom_to_dict()
-        for degree in parsed1:
-            value = parsed1[degree]
-            if value == 0:
-                continue
-            if degree not in parsed2 or value != parsed2[degree]:
-                return False
-        return True
 
     def multiply(self, other):
         parsed1 = self.split_polynom_to_dict()
