@@ -100,8 +100,24 @@ class Polynomial:
                 return False
         return True
 
-    def multiply(self):
-        pass
+    def multiply(self, other):
+        parsed1 = self.split_polynom_to_dict()
+        parsed2 = other.split_polynom_to_dict()
+        result = {}
+
+        for degrees_tuple1 in parsed1:
+            for degrees_tuple2 in parsed2:
+                multiplier = parsed1[degrees_tuple1] * parsed2[degrees_tuple2]
+
+                degrees = tuple(degree1+degree2
+                                for index1, degree1 in enumerate(degrees_tuple1)
+                                for index2, degree2 in enumerate(degrees_tuple2)
+                                if index1 == index2)
+                if degrees in result:
+                    result[degrees] += multiplier
+                else:
+                    result[degrees] = multiplier
+        return result
 
 
 if __name__ == "__main__":

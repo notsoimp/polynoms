@@ -37,6 +37,10 @@ class TestParsers(unittest.TestCase):
         self.assertTrue(Polynomial('2x-2x') == Polynomial('0'))
         self.assertTrue(Polynomial('15xy+25x^2y^2') == Polynomial('15yx+25y^2*x^2'))
 
+    def test_multiply(self):
+        self.assertEqual(Polynomial('2x^2+1').multiply(Polynomial('2x^3-x')),
+                         {(5,): 4, (3,): 0, (1,): -1})
+
 
 if __name__ == '__main__':
     unittest.main()
