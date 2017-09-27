@@ -40,9 +40,10 @@ class TestParsers(unittest.TestCase):
         self.assertFalse(Polynomial('2x') == Polynomial('2x^2'))
 
     def test_multiply(self):
-        self.assertEqual(Polynomial('2x^2+1').multiply(Polynomial('2x^3-x')),
+        self.assertEqual(Polynomial('2x^2+1')*(Polynomial('2x^3-x')),
                          {(5,): 4, (3,): 0, (1,): -1})
-
+        self.assertEqual(Polynomial('x')*Polynomial('0'),
+                         {(): 0})
 
 if __name__ == '__main__':
     unittest.main()

@@ -3,7 +3,7 @@ import re
 
 class Polynomial:
     def __init__(self, polynomial):
-        self.polynom = polynomial.replace(' ', '')
+        self._polynom = polynomial.replace(' ', '')
         self.errors = ''
         self._variables = list(set(re.findall(r'[a-zA-Z]', polynomial)))
         self._variables.sort()
@@ -12,6 +12,11 @@ class Polynomial:
 
     def __eq__(self, other):
         return self.is_equal(other) and other.is_equal(self)
+
+    def __str__(self):
+        return self._polynom
+
+
 
     def is_equal(self, other):
         parsed1 = self.split_polynom_to_dict()
@@ -25,30 +30,30 @@ class Polynomial:
         return True
 
     def is_correct(self):
-        unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self.polynom)
+        unacceptable = re.findall(r'[^a-zA-Z\d\-+*^()]', self._polynom)
         if not unacceptable.__len__() == 0:
             self.errors = 'unacceptable symbols: '+' '.join(x for x in unacceptable)
             return False
-        pre_hats = re.findall(r'(?<![a-zA-Z])\^', self.polynom)
+        pre_hats = re.findall(r'(?<![a-zA-Z])\^', self._polynom)
         if not pre_hats.__len__() == 0:
             self.errors = 'strange symbol before \"^\". ' \
                            '\nRemember that I can not build a number to the power'
             return False
-        after_hats = re.findall(r'\^(?!\d)', self.polynom)
+        after_hats = re.findall(r'\^(?!\d)', self._polynom)
         if not after_hats.__len__() == 0:
             self.errors = 'strange symbol after \"^\".' \
                            '\nRemember that I can work only with natural degrees'
             return False
-        open_brace = re.findall(r'[(]', self.polynom)
-        close_brace = re.findall(r'[)]', self.polynom)
+        open_brace = re.findall(r'[(]', self._polynom)
+        close_brace = re.findall(r'[)]', self._polynom)
         if len(open_brace) != len(close_brace):
             self.errors = 'opened and closed braces'
             return False
         return True
 
     def split_polynom_to_dict(self):
-        self.polynom = self.polynom.replace('-', '+-')
-        monomials = filter(None, self.polynom.split('+'))
+        self._polynom = self._polynom.replace('-', '+-')
+        monomials = filter(None, self._polynom.split('+'))
         for monom in monomials:
             variable_degree_dict = self.init_var_deg_dict(monom)
             for var in self._variables:
@@ -98,7 +103,8 @@ class Polynomial:
             variable_degree_dict['_'] = '-1'
         return variable_degree_dict
 
-    def multiply(self, other):
+    def __mul__(self, other):
+        # не могу в нормальное перемножение как ни крути
         parsed1 = self.split_polynom_to_dict()
         parsed2 = other.split_polynom_to_dict()
         result = {}
@@ -116,8 +122,3 @@ class Polynomial:
                 else:
                     result[degrees] = multiplier
         return result
-
-
-'''if __name__ == "__main__":
-    sys.stdout.write("I'm only the class realizer. I can do nothing, sorry. "
-                     "\nPlease, call compare.py to do it. He can.\n") '''
